@@ -33,11 +33,9 @@ final class KeychainService: AuthTokenStoreProtocol {
     func saveToken(_ token: String) throws {
         let tokenData = Data(token.utf8)
 
-        let attributes: [CFString: Any] = [
-            kSecAttrService: service,
-            kSecAttrAccount: account,
-            kSecValueData: tokenData
-        ]
+        var attributes = baseQuery
+        attributes[kSecValueData] = tokenData
+        attributes[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         let addStatus = SecItemAdd(attributes as CFDictionary, nil)
         if addStatus == errSecSuccess {

@@ -1,6 +1,11 @@
 import UIKit
 
 final class RememberMeCheckboxView: UIControl {
+    private enum Animation {
+        static let duration: TimeInterval = 0.55
+        static let scaleTransform = CGAffineTransform(scaleX: 0.78, y: 0.78)
+    }
+
     private let imageView = UIImageView()
     private let titleLabel = AppLabel(
         style: AppTextStyles.checkbox,
@@ -9,7 +14,8 @@ final class RememberMeCheckboxView: UIControl {
 
     var isChecked: Bool = false {
         didSet {
-            updateAppearance()
+            let shouldAnimate = oldValue != isChecked && window != nil
+            updateAppearance(animated: shouldAnimate)
         }
     }
 
@@ -17,7 +23,7 @@ final class RememberMeCheckboxView: UIControl {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         setupUI(title: title)
-        updateAppearance()
+        updateAppearance(animated: false)
     }
 
     @available(*, unavailable)
@@ -57,13 +63,42 @@ final class RememberMeCheckboxView: UIControl {
         ])
     }
 
-    private func updateAppearance() {
-        imageView.image = UIImage(
+    private func updateAppearance(animated: Bool) {
+        let updatedImage = UIImage(
             systemName: isChecked ? "checkmark.square.fill" : "square",
             withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
         )
-        imageView.tintColor = isChecked ? AppColors.brandPrimary : AppColors.textSecondary
-        accessibilityValue = isChecked ? "Checked" : "Unchecked"
-        accessibilityTraits = isChecked ? [.button, .selected] : [.button]
+        let updatedTintColor = isChecked ? AppColors.brandPrimary : AppColors.textSecondary
+
+        let applyChanges = {
+            self.imageView.image = updatedImage
+            self.imageView.tintColor = updatedTintColor
+            self.accessibilityValue = self.isChecked ? "Checked" : "Unchecked"
+            self.accessibilityTraits = self.isChecked ? [.button, .selected] : [.button]
+        }
+
+        guard animated else {
+            imageView.transform = .identity
+            applyChanges()
+            return
+        }
+
+        imageView.transform = Animation.scaleTransform
+        UIView.transition(
+            with: imageView,
+            duration: Animation.duration,
+            options: [.transitionCrossDissolve, .curveEaseInOut]
+        ) {
+            applyChanges()
+        }
+        UIView.animate(
+            withDuration: Animation.duration,
+            delay: 0,
+            usingSpringWithDamping: 0.88,
+            initialSpringVelocity: 0.12,
+            options: [.curveEaseInOut]
+        ) {
+            self.imageView.transform = .identity
+        }
     }
 }

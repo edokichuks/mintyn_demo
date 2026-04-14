@@ -52,6 +52,8 @@ final class LoginFlowUITests: XCTestCase {
     }
 
     func test_loginWithInvalidCredentials_showsInlineError() {
+        let errorLabel = app.otherElements["loginErrorLabel"]
+
         app.textFields["loginPhoneTextField"].tap()
         app.textFields["loginPhoneTextField"].typeText("8021234567")
 
@@ -60,8 +62,8 @@ final class LoginFlowUITests: XCTestCase {
 
         app.buttons["loginSubmitButton"].tap()
 
-        XCTAssertTrue(app.staticTexts["loginErrorLabel"].waitForExistence(timeout: 3))
-        XCTAssertEqual(app.staticTexts["loginErrorLabel"].label, "Invalid phone number or password.")
+        XCTAssertTrue(errorLabel.waitForExistence(timeout: 4))
+        XCTAssertEqual(errorLabel.label, "Invalid phone number or password.")
     }
 
     func test_successfulLogin_navigatesToHomeAndCanLogout() {

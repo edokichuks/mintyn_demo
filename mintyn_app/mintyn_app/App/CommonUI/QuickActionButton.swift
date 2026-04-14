@@ -10,7 +10,7 @@ final class QuickActionButton: UIButton {
         let subtitleColor: UIColor
 
         static let `default` = Style(
-            backgroundColor: AppColors.surfacePrimary,
+            backgroundColor: AppColors.surfaceSecondary,
             borderColor: nil,
             borderWidth: 0,
             iconTintColor: AppColors.iconTint,
@@ -19,7 +19,7 @@ final class QuickActionButton: UIButton {
         )
 
         static let highlighted = Style(
-            backgroundColor: AppColors.surfacePrimary,
+            backgroundColor: AppColors.surfaceSecondary,
             borderColor: AppColors.successMuted.withAlphaComponent(0.45),
             borderWidth: 1,
             iconTintColor: AppColors.successMuted,
@@ -28,7 +28,7 @@ final class QuickActionButton: UIButton {
         )
 
         static let mutedSuccess = Style(
-            backgroundColor: AppColors.surfacePrimary,
+            backgroundColor: AppColors.surfaceSecondary,
             borderColor: nil,
             borderWidth: 0,
             iconTintColor: AppColors.iconSuccessTint,
@@ -51,6 +51,7 @@ final class QuickActionButton: UIButton {
         numberOfLines: 1
     )
     private let textStackView = UIStackView()
+    private let buttonStyle: Style
 
     init(
         title: String,
@@ -58,6 +59,7 @@ final class QuickActionButton: UIButton {
         iconSystemName: String,
         style: Style = .default
     ) {
+        self.buttonStyle = style
         super.init(frame: .zero)
         setup(title: title, subtitle: subtitle, iconSystemName: iconSystemName, style: style)
     }
@@ -69,24 +71,18 @@ final class QuickActionButton: UIButton {
     
     private func setup(title: String, subtitle: String?, iconSystemName: String, style: Style) {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = style.backgroundColor
         layer.cornerRadius = 16
-        layer.borderColor = style.borderColor?.cgColor
-        layer.borderWidth = style.borderWidth
         accessibilityTraits.insert(.button)
 
         iconImageView.image = UIImage(
             systemName: iconSystemName,
             withConfiguration: UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
         )
-        iconImageView.tintColor = style.iconTintColor
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
 
         titleLabelView.text = title
-        titleLabelView.textColor = style.titleColor
         subtitleLabelView.text = subtitle
-        subtitleLabelView.textColor = style.subtitleColor
         subtitleLabelView.isHidden = subtitle == nil
 
         textStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +107,13 @@ final class QuickActionButton: UIButton {
             textStackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
+        applyStyle()
         addAction(UIAction { _ in }, for: .touchUpInside)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyStyle()
     }
 
     override var isHighlighted: Bool {
@@ -119,5 +121,14 @@ final class QuickActionButton: UIButton {
             alpha = isHighlighted ? 0.82 : 1.0
             transform = isHighlighted ? CGAffineTransform(scaleX: 0.985, y: 0.985) : .identity
         }
+    }
+
+    private func applyStyle() {
+        backgroundColor = buttonStyle.backgroundColor
+        layer.borderColor = buttonStyle.borderColor?.cgColor
+        layer.borderWidth = buttonStyle.borderWidth
+        iconImageView.tintColor = buttonStyle.iconTintColor
+        titleLabelView.textColor = buttonStyle.titleColor
+        subtitleLabelView.textColor = buttonStyle.subtitleColor
     }
 }

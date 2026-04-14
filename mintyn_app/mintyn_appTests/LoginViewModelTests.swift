@@ -40,6 +40,11 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertEqual(normalizedPhone, "8021234567")
     }
 
+    func test_normalizePhone_withAdditionalDemoNumbers_returnsTenDigitLocalNumber() {
+        XCTAssertEqual(LoginViewModel.normalizePhone("08141584265"), "8141584265")
+        XCTAssertEqual(LoginViewModel.normalizePhone("08000000000"), "8000000000")
+    }
+
     func test_togglePasswordVisibility_updatesViewState() {
         XCTAssertTrue(sut.currentState.isPasswordHidden)
 

@@ -8,7 +8,7 @@ final class PhonePrefixView: UIView {
     )
     private let prefixLabel = AppLabel(
         style: AppTextStyles.input,
-        color: AppColors.textSecondary
+        color: AppColors.textTertiary
     )
 
     override init(frame: CGRect) {

@@ -16,18 +16,20 @@ final class AppTextField: UITextField {
     
     private func setup() {
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = AppColors.inputBackground
-        textColor = AppColors.textPrimary
-        tintColor = AppColors.brandPrimary
         layer.cornerRadius = 15
-        layer.borderColor = AppColors.border.cgColor
+        layer.cornerCurve = .continuous
         layer.borderWidth = 1
         font = AppTextStyles.input
         heightAnchor.constraint(equalToConstant: 56).isActive = true
         autocorrectionType = .no
         spellCheckingType = .no
         adjustsFontForContentSizeCategory = true
-        updatePlaceholder()
+        applyPalette()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyPalette()
     }
 
     override var placeholder: String? {
@@ -108,5 +110,13 @@ final class AppTextField: UITextField {
                 .font: AppTextStyles.input
             ]
         )
+    }
+
+    private func applyPalette() {
+        backgroundColor = AppColors.inputBackground
+        textColor = AppColors.textPrimary
+        tintColor = AppColors.brandPrimary
+        layer.borderColor = AppColors.border.cgColor
+        updatePlaceholder()
     }
 }
