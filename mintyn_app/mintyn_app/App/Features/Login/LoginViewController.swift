@@ -12,10 +12,11 @@ final class LoginViewController: UIViewController {
         color: AppColors.textPrimary,
         alignment: .center
     )
+    private let rootScrollView = UIScrollView()
+    private let contentView = UIView()
     private let quickActionsPagerView = QuickActionPagerView()
     private let pageIndicatorView = LoginPageIndicatorView()
     private let formCardView = UIView()
-    private let formScrollView = UIScrollView()
     private let phoneLabel = AppLabel(style: AppTextStyles.fieldLabel, color: AppColors.textPrimary)
     private let phoneField = AppTextField()
     private let passwordLabel = AppLabel(style: AppTextStyles.fieldLabel, color: AppColors.textPrimary)
@@ -97,27 +98,48 @@ final class LoginViewController: UIViewController {
         setupQuickActions()
         setupForm()
 
-        view.addSubview(welcomeLabel)
-        view.addSubview(quickActionsPagerView)
-        view.addSubview(pageIndicatorView)
-        view.addSubview(formCardView)
+        rootScrollView.translatesAutoresizingMaskIntoConstraints = false
+        rootScrollView.keyboardDismissMode = .interactive
+        rootScrollView.showsVerticalScrollIndicator = false
+        rootScrollView.alwaysBounceVertical = false
+
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(rootScrollView)
+        rootScrollView.addSubview(contentView)
+        contentView.addSubview(welcomeLabel)
+        contentView.addSubview(quickActionsPagerView)
+        contentView.addSubview(pageIndicatorView)
+        contentView.addSubview(formCardView)
 
         NSLayoutConstraint.activate([
-            welcomeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Spacing.lg),
-            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Spacing.lg),
-            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Spacing.lg),
+            rootScrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            rootScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            rootScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            rootScrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            quickActionsPagerView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 42),
-            quickActionsPagerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 18),
-            quickActionsPagerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -18),
+            contentView.topAnchor.constraint(equalTo: rootScrollView.contentLayoutGuide.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: rootScrollView.contentLayoutGuide.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: rootScrollView.contentLayoutGuide.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: rootScrollView.contentLayoutGuide.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: rootScrollView.frameLayoutGuide.widthAnchor),
+            contentView.heightAnchor.constraint(greaterThanOrEqualTo: rootScrollView.frameLayoutGuide.heightAnchor),
+
+            welcomeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 56),
+            welcomeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.lg),
+            welcomeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Spacing.lg),
+
+            quickActionsPagerView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 32),
+            quickActionsPagerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18),
+            quickActionsPagerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
 
             pageIndicatorView.topAnchor.constraint(equalTo: quickActionsPagerView.bottomAnchor, constant: 18),
-            pageIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageIndicatorView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-            formCardView.topAnchor.constraint(equalTo: pageIndicatorView.bottomAnchor, constant: 54),
-            formCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            formCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            formCardView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            formCardView.topAnchor.constraint(equalTo: pageIndicatorView.bottomAnchor, constant: 44),
+            formCardView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            formCardView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            formCardView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 
@@ -171,11 +193,6 @@ final class LoginViewController: UIViewController {
         formCardView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         formCardView.clipsToBounds = true
         applyFormCardAppearance()
-
-        formScrollView.translatesAutoresizingMaskIntoConstraints = false
-        formScrollView.showsVerticalScrollIndicator = false
-        formScrollView.alwaysBounceVertical = true
-        formScrollView.keyboardDismissMode = .interactive
 
         phoneLabel.text = "Phone Number"
         phoneField.placeholder = "802 123 4567"
@@ -259,23 +276,21 @@ final class LoginViewController: UIViewController {
         contentStack.setCustomSpacing(20, after: phoneField)
         contentStack.setCustomSpacing(8, after: passwordLabel)
         contentStack.setCustomSpacing(16, after: passwordField)
-        contentStack.setCustomSpacing(46, after: rememberForgotRow)
-        contentStack.setCustomSpacing(48, after: loginButton)
-        contentStack.setCustomSpacing(14, after: registerDeviceButton)
+        contentStack.setCustomSpacing(40, after: rememberForgotRow)
+        contentStack.setCustomSpacing(40, after: loginButton)
+        contentStack.setCustomSpacing(12, after: registerDeviceButton)
 
-        formCardView.addSubview(formScrollView)
-        formScrollView.addSubview(contentStack)
+        formCardView.addSubview(contentStack)
+
+        let relaxedBottomConstraint = contentStack.bottomAnchor.constraint(equalTo: formCardView.bottomAnchor, constant: -24)
+        relaxedBottomConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
-            formScrollView.topAnchor.constraint(equalTo: formCardView.topAnchor),
-            formScrollView.leadingAnchor.constraint(equalTo: formCardView.leadingAnchor),
-            formScrollView.trailingAnchor.constraint(equalTo: formCardView.trailingAnchor),
-            formScrollView.bottomAnchor.constraint(equalTo: formCardView.safeAreaLayoutGuide.bottomAnchor),
-
-            contentStack.topAnchor.constraint(equalTo: formScrollView.contentLayoutGuide.topAnchor, constant: 48),
-            contentStack.leadingAnchor.constraint(equalTo: formScrollView.frameLayoutGuide.leadingAnchor, constant: 18),
-            contentStack.trailingAnchor.constraint(equalTo: formScrollView.frameLayoutGuide.trailingAnchor, constant: -18),
-            contentStack.bottomAnchor.constraint(equalTo: formScrollView.contentLayoutGuide.bottomAnchor, constant: -28)
+            contentStack.topAnchor.constraint(equalTo: formCardView.topAnchor, constant: 36),
+            contentStack.leadingAnchor.constraint(equalTo: formCardView.leadingAnchor, constant: 18),
+            contentStack.trailingAnchor.constraint(equalTo: formCardView.trailingAnchor, constant: -18),
+            contentStack.bottomAnchor.constraint(lessThanOrEqualTo: formCardView.safeAreaLayoutGuide.bottomAnchor, constant: -24),
+            relaxedBottomConstraint
         ])
     }
 
@@ -329,8 +344,8 @@ final class LoginViewController: UIViewController {
 
         UIView.animate(withDuration: duration, delay: 0, options: options) { [weak self] in
             guard let self else { return }
-            formScrollView.contentInset.bottom = bottomInset
-            formScrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+            rootScrollView.contentInset.bottom = bottomInset
+            rootScrollView.verticalScrollIndicatorInsets.bottom = bottomInset
             scrollActiveInputIntoView(animated: false)
             view.layoutIfNeeded()
         }
@@ -387,9 +402,9 @@ final class LoginViewController: UIViewController {
     private func scrollActiveInputIntoView(animated: Bool) {
         guard let activeInput = activeInputView else { return }
 
-        let inputRect = activeInput.convert(activeInput.bounds, to: formScrollView)
+        let inputRect = activeInput.convert(activeInput.bounds, to: rootScrollView)
         let paddedRect = inputRect.insetBy(dx: 0, dy: -24)
-        formScrollView.scrollRectToVisible(paddedRect, animated: animated)
+        rootScrollView.scrollRectToVisible(paddedRect, animated: animated)
     }
 
     private var activeInputView: UIView? {
