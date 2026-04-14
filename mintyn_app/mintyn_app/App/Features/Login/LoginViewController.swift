@@ -14,7 +14,7 @@ final class LoginViewController: UIViewController {
         color: AppColors.textPrimary,
         alignment: .center
     )
-    private let quickActionsStack = UIStackView()
+    private let quickActionsPagerView = QuickActionPagerView()
     private let pageIndicatorView = LoginPageIndicatorView()
     private let formCardView = UIView()
     private let phoneLabel = AppLabel(style: AppTextStyles.fieldLabel, color: AppColors.textPrimary)
@@ -89,7 +89,10 @@ final class LoginViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
 
         welcomeLabel.text = "Welcome"
-        pageIndicatorView.setCurrentPage(0)
+        pageIndicatorView.accessibilityIdentifier = "loginQuickActionsPageIndicator"
+        pageIndicatorView.accessibilityLabel = "Quick actions page"
+        pageIndicatorView.configure(pageCount: 2)
+        pageIndicatorView.setCurrentPage(0, animated: false)
 
         setupQuickActions()
         setupForm()
@@ -97,7 +100,7 @@ final class LoginViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(welcomeLabel)
-        contentView.addSubview(quickActionsStack)
+        contentView.addSubview(quickActionsPagerView)
         contentView.addSubview(pageIndicatorView)
         contentView.addSubview(formCardView)
 
@@ -118,11 +121,11 @@ final class LoginViewController: UIViewController {
             welcomeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Spacing.lg),
             welcomeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Spacing.lg),
 
-            quickActionsStack.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 42),
-            quickActionsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18),
-            quickActionsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
+            quickActionsPagerView.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 42),
+            quickActionsPagerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18),
+            quickActionsPagerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
 
-            pageIndicatorView.topAnchor.constraint(equalTo: quickActionsStack.bottomAnchor, constant: 18),
+            pageIndicatorView.topAnchor.constraint(equalTo: quickActionsPagerView.bottomAnchor, constant: 18),
             pageIndicatorView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
             formCardView.topAnchor.constraint(equalTo: pageIndicatorView.bottomAnchor, constant: 40),
@@ -133,26 +136,46 @@ final class LoginViewController: UIViewController {
     }
 
     private func setupQuickActions() {
-        let easyCollectButton = QuickActionButton(title: "EasyCollect", iconSystemName: "shippingbox.fill")
-        let openAccountButton = QuickActionButton(title: "Open an\nAccount", iconSystemName: "shield.fill")
-        let registrationButton = QuickActionButton(title: "CAC Business\nRegistration", iconSystemName: "doc.on.doc.fill")
-        let supportButton = QuickActionButton(title: "Contact\nSupport", iconSystemName: "person.crop.circle.badge.questionmark")
-
-        let topRow = UIStackView(arrangedSubviews: [easyCollectButton, openAccountButton])
-        topRow.axis = .horizontal
-        topRow.spacing = 14
-        topRow.distribution = .fillEqually
-
-        let bottomRow = UIStackView(arrangedSubviews: [registrationButton, supportButton])
-        bottomRow.axis = .horizontal
-        bottomRow.spacing = 14
-        bottomRow.distribution = .fillEqually
-
-        quickActionsStack.translatesAutoresizingMaskIntoConstraints = false
-        quickActionsStack.axis = .vertical
-        quickActionsStack.spacing = 14
-        quickActionsStack.addArrangedSubview(topRow)
-        quickActionsStack.addArrangedSubview(bottomRow)
+        quickActionsPagerView.accessibilityIdentifier = "loginQuickActionsPager"
+        quickActionsPagerView.delegate = self
+        quickActionsPagerView.configure(
+            with: [
+                QuickActionPagerView.Page(
+                    rows: [
+                        [
+                            QuickActionPagerView.Card(title: "EasyCollect", iconSystemName: "shippingbox.fill"),
+                            QuickActionPagerView.Card(title: "Open an", subtitle: "Account", iconSystemName: "shield.fill")
+                        ],
+                        [
+                            QuickActionPagerView.Card(title: "CAC Business", subtitle: "Registration", iconSystemName: "doc.on.doc.fill"),
+                            QuickActionPagerView.Card(title: "Contact", subtitle: "Support", iconSystemName: "person.crop.circle.badge.questionmark")
+                        ]
+                    ]
+                ),
+                QuickActionPagerView.Page(
+                    rows: [
+                        [
+                            QuickActionPagerView.Card(
+                                title: "Maplerad",
+                                subtitle: "Virtual Cards",
+                                iconSystemName: "creditcard.fill",
+                                style: .highlighted
+                            ),
+                            QuickActionPagerView.Card(title: "Insurance", subtitle: "Coming soon...", iconSystemName: "shield.fill")
+                        ],
+                        [
+                            QuickActionPagerView.Card(
+                                title: "NCTO Card",
+                                subtitle: "Activation",
+                                iconSystemName: "creditcard.trianglebadge.exclamationmark",
+                                style: .mutedSuccess
+                            ),
+                            nil
+                        ]
+                    ]
+                )
+            ]
+        )
     }
 
     private func setupForm() {
@@ -166,8 +189,8 @@ final class LoginViewController: UIViewController {
         phoneField.keyboardType = .phonePad
         phoneField.textContentType = .telephoneNumber
         phoneField.accessibilityIdentifier = "loginPhoneTextField"
+        phoneField.delegate = self
         phoneField.applyLeftAccessoryView(PhonePrefixView())
-        phoneField.addTarget(self, action: #selector(phoneChanged), for: .editingChanged)
 
         passwordLabel.text = "Password"
         passwordField.placeholder = "********"
@@ -334,10 +357,6 @@ final class LoginViewController: UIViewController {
         passwordField.text = existingText
     }
 
-    @objc private func phoneChanged() {
-        viewModel.updatePhone(phoneField.text ?? "")
-    }
-
     @objc private func passwordChanged() {
         viewModel.updatePassword(passwordField.text ?? "")
     }
@@ -361,5 +380,30 @@ final class LoginViewController: UIViewController {
     @objc private func loginTapped() {
         view.endEditing(true)
         viewModel.submit()
+    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard textField === phoneField,
+              let currentText = textField.text,
+              let textRange = Range(range, in: currentText)
+        else {
+            return true
+        }
+
+        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
+        let formattedText = LoginViewModel.formatPhoneInput(updatedText)
+
+        phoneField.text = formattedText
+        viewModel.updatePhone(formattedText)
+
+        return false
+    }
+}
+
+extension LoginViewController: QuickActionPagerViewDelegate {
+    func quickActionPagerView(_ pagerView: QuickActionPagerView, didChangePage page: Int) {
+        pageIndicatorView.setCurrentPage(page)
     }
 }

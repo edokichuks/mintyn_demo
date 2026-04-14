@@ -4,6 +4,7 @@ enum AppTextStyles {
     static let screenTitle = AppFonts.scaledFont(size: 18, weight: .medium, textStyle: .title2)
     static let sectionLabel = AppFonts.scaledFont(size: 16, weight: .regular, textStyle: .body)
     static let quickActionTitle = AppFonts.scaledFont(size: 15, weight: .regular, textStyle: .subheadline)
+    static let quickActionSubtitle = AppFonts.scaledFont(size: 12, weight: .regular, textStyle: .caption1)
     static let fieldLabel = AppFonts.scaledFont(size: 16, weight: .regular, textStyle: .subheadline)
     static let input = AppFonts.scaledFont(size: 16, weight: .regular, textStyle: .body)
     static let body = AppFonts.scaledFont(size: 15, weight: .regular, textStyle: .body)

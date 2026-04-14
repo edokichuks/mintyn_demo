@@ -21,6 +21,36 @@ final class LoginFlowUITests: XCTestCase {
         XCTAssertTrue(app.buttons["loginSubmitButton"].exists)
     }
 
+    func test_rememberMeToggle_updatesAccessibilityValue() {
+        let rememberMeButton = app.buttons["loginRememberMeToggle"]
+
+        XCTAssertEqual(rememberMeButton.value as? String, "Unchecked")
+
+        rememberMeButton.tap()
+
+        XCTAssertEqual(rememberMeButton.value as? String, "Checked")
+    }
+
+    func test_quickActionsPager_swipesToSecondPage() {
+        let pagerView = app.otherElements["loginQuickActionsPager"]
+        let pageIndicator = app.otherElements["loginQuickActionsPageIndicator"]
+
+        XCTAssertTrue(pagerView.waitForExistence(timeout: 2))
+        XCTAssertTrue(pageIndicator.waitForExistence(timeout: 2))
+        XCTAssertEqual(pageIndicator.value as? String, "Page 1 of 2")
+
+        pagerView.swipeLeft()
+
+        let indicatorExpectation = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", "Page 2 of 2"),
+            object: pageIndicator
+        )
+        XCTAssertEqual(XCTWaiter().wait(for: [indicatorExpectation], timeout: 2), .completed)
+        XCTAssertTrue(app.staticTexts["Maplerad"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["Insurance"].exists)
+        XCTAssertTrue(app.staticTexts["NCTO Card"].exists)
+    }
+
     func test_loginWithInvalidCredentials_showsInlineError() {
         app.textFields["loginPhoneTextField"].tap()
         app.textFields["loginPhoneTextField"].typeText("8021234567")

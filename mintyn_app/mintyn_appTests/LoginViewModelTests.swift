@@ -28,6 +28,18 @@ final class LoginViewModelTests: XCTestCase {
         XCTAssertFalse(sut.currentState.isLoginEnabled)
     }
 
+    func test_updatePhone_withExtraDigits_truncatesToTenLocalDigits() {
+        sut.updatePhone("+234802123456789")
+
+        XCTAssertEqual(sut.currentState.phoneText, "802 123 4567")
+    }
+
+    func test_normalizePhone_withFormattedInput_returnsTenDigitLocalNumber() {
+        let normalizedPhone = LoginViewModel.normalizePhone("802 123 4567")
+
+        XCTAssertEqual(normalizedPhone, "8021234567")
+    }
+
     func test_togglePasswordVisibility_updatesViewState() {
         XCTAssertTrue(sut.currentState.isPasswordHidden)
 

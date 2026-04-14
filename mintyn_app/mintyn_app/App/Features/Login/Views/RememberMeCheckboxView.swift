@@ -43,6 +43,7 @@ final class RememberMeCheckboxView: UIControl {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.spacing = 10
+        stackView.isUserInteractionEnabled = false
 
         addSubview(stackView)
 

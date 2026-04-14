@@ -16,8 +16,10 @@ enum AppColors {
     static let error = UIColor(hex: "#E97171")
     static let errorBackground = UIColor(hex: "#3A2020")
     static let success = UIColor(hex: "#70D39A")
+    static let successMuted = UIColor(hex: "#9EDB72")
     static let indicatorInactive = UIColor(hex: "#5B5651")
     static let iconTint = UIColor(hex: "#C7A04A")
+    static let iconSuccessTint = UIColor(hex: "#8BE16A")
     static let separator = UIColor(hex: "#2F2B2B")
 
     static let background = screenBackground

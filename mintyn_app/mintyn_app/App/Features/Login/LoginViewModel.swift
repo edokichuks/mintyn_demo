@@ -11,6 +11,8 @@ struct LoginViewState: Equatable {
 
 @MainActor
 final class LoginViewModel {
+    static let localPhoneDigitsCount = 10
+
     var onStateChange: ((LoginViewState) -> Void)?
     var onLoginSuccess: (() -> Void)?
 
@@ -49,7 +51,7 @@ final class LoginViewModel {
     }
 
     func updatePhone(_ value: String) {
-        phoneText = value
+        phoneText = Self.formatPhoneInput(value)
         clearErrorIfNeeded()
         publishState()
     }
@@ -127,21 +129,36 @@ final class LoginViewModel {
     }
 
     static func normalizePhone(_ rawValue: String) -> String? {
-        let digitsOnly = rawValue.filter(\.isNumber)
+        let localDigits = sanitizedLocalPhoneDigits(from: rawValue)
+        return localDigits.count == localPhoneDigitsCount ? localDigits : nil
+    }
 
-        if digitsOnly.count == 13, digitsOnly.hasPrefix("234") {
-            return String(digitsOnly.dropFirst(3))
+    static func formatPhoneInput(_ rawValue: String) -> String {
+        let localDigits = sanitizedLocalPhoneDigits(from: rawValue)
+        let groups = [3, 3, 4]
+
+        var formattedParts = [String]()
+        var startIndex = localDigits.startIndex
+
+        for groupLength in groups where startIndex < localDigits.endIndex {
+            let endIndex = localDigits.index(startIndex, offsetBy: groupLength, limitedBy: localDigits.endIndex) ?? localDigits.endIndex
+            formattedParts.append(String(localDigits[startIndex..<endIndex]))
+            startIndex = endIndex
         }
 
-        if digitsOnly.count == 11, digitsOnly.hasPrefix("0") {
-            return String(digitsOnly.dropFirst())
+        return formattedParts.joined(separator: " ")
+    }
+
+    static func sanitizedLocalPhoneDigits(from rawValue: String) -> String {
+        var digitsOnly = rawValue.filter(\.isNumber)
+
+        if digitsOnly.hasPrefix("234") {
+            digitsOnly = String(digitsOnly.dropFirst(3))
+        } else if digitsOnly.hasPrefix("0") {
+            digitsOnly = String(digitsOnly.dropFirst())
         }
 
-        if digitsOnly.count == 10 {
-            return digitsOnly
-        }
-
-        return nil
+        return String(digitsOnly.prefix(localPhoneDigitsCount))
     }
 
     private var isFormSubmittable: Bool {
