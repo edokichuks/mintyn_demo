@@ -6,8 +6,41 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2D756C197C15DBEC263B63FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE62AB0736F20CD23A963C1C /* Foundation.framework */; };
+		432C14DFAE60A3225BEAB227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE62AB0736F20CD23A963C1C /* Foundation.framework */; };
+		61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */; };
+		9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F39281966431020CA1D342 /* MockTokenStore.swift */; };
+		97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */; };
+		E66DE32309F42F13E67F6CED /* LoginFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4C2F9E63A89F94D161CCB298 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE77B6972F8E52B800AF0DFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE77B69E2F8E52B800AF0DFF;
+			remoteInfo = mintyn_app;
+		};
+		51D3394D29F98F822D1A253B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE77B6972F8E52B800AF0DFF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CE77B69E2F8E52B800AF0DFF;
+			remoteInfo = mintyn_app;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		13F39281966431020CA1D342 /* MockTokenStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockTokenStore.swift; sourceTree = "<group>"; };
+		761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginFlowUITests.swift; sourceTree = "<group>"; };
+		8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		A27F17D422651450F27294E9 /* mintyn_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mintyn_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE62AB0736F20CD23A963C1C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CE77B69F2F8E52B800AF0DFF /* mintyn_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mintyn_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBF3AFE67F8495390D952A95 /* mintyn_appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mintyn_appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -19,6 +52,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5937DC91C9EA4966538FBDC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				432C14DFAE60A3225BEAB227 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE77B69C2F8E52B800AF0DFF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -26,14 +67,58 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF6D28F220194FECC38B79DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D756C197C15DBEC263B63FE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15A32A61C169DC13F853CF62 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A5B0B688FC02D44E0123086 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		28A259C036BDDA503A287D1F /* mintyn_appTests */ = {
+			isa = PBXGroup;
+			children = (
+				F8E4403865CA207E0BDD8226 /* Helpers */,
+				EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */,
+			);
+			path = mintyn_appTests;
+			sourceTree = "<group>";
+		};
+		9A5B0B688FC02D44E0123086 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				AE62AB0736F20CD23A963C1C /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		C0D3FCC0FEE41D7B992662A4 /* mintyn_appUITests */ = {
+			isa = PBXGroup;
+			children = (
+				761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */,
+			);
+			path = mintyn_appUITests;
+			sourceTree = "<group>";
+		};
 		CE77B6962F8E52B800AF0DFF = {
 			isa = PBXGroup;
 			children = (
 				CE77B6A12F8E52B800AF0DFF /* mintyn_app */,
 				CE77B6A02F8E52B800AF0DFF /* Products */,
+				15A32A61C169DC13F853CF62 /* Frameworks */,
+				28A259C036BDDA503A287D1F /* mintyn_appTests */,
+				C0D3FCC0FEE41D7B992662A4 /* mintyn_appUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -41,13 +126,60 @@
 			isa = PBXGroup;
 			children = (
 				CE77B69F2F8E52B800AF0DFF /* mintyn_app.app */,
+				DBF3AFE67F8495390D952A95 /* mintyn_appTests.xctest */,
+				A27F17D422651450F27294E9 /* mintyn_appUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F8E4403865CA207E0BDD8226 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */,
+				13F39281966431020CA1D342 /* MockTokenStore.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4AED5D92C12B4D7B99D40A60 /* mintyn_appUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 129BD7033C4E23C45081AC35 /* Build configuration list for PBXNativeTarget "mintyn_appUITests" */;
+			buildPhases = (
+				DC68C8DBC80D770CF022A996 /* Sources */,
+				5937DC91C9EA4966538FBDC2 /* Frameworks */,
+				B27D344EE8A3F29A1ACBD42B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				670AAD6FF47B99A8B180C11C /* PBXTargetDependency */,
+			);
+			name = mintyn_appUITests;
+			productName = mintyn_appUITests;
+			productReference = A27F17D422651450F27294E9 /* mintyn_appUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		50578D4BD9A8083E76486597 /* mintyn_appTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 81D1626FDE0C110281AB041D /* Build configuration list for PBXNativeTarget "mintyn_appTests" */;
+			buildPhases = (
+				AD89690A26A6C94C64A7D51B /* Sources */,
+				FF6D28F220194FECC38B79DA /* Frameworks */,
+				54573F8AE7897FC8B91B100F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B0F705611589F4E53C752F4 /* PBXTargetDependency */,
+			);
+			name = mintyn_appTests;
+			productName = mintyn_appTests;
+			productReference = DBF3AFE67F8495390D952A95 /* mintyn_appTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		CE77B69E2F8E52B800AF0DFF /* mintyn_app */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE77B6AA2F8E52BB00AF0DFF /* Build configuration list for PBXNativeTarget "mintyn_app" */;
@@ -64,9 +196,7 @@
 				CE77B6A12F8E52B800AF0DFF /* mintyn_app */,
 			);
 			name = mintyn_app;
-			packageProductDependencies = (
-			);
-			productName = mintyn_app;
+			productName = Mintyn;
 			productReference = CE77B69F2F8E52B800AF0DFF /* mintyn_app.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -100,11 +230,27 @@
 			projectRoot = "";
 			targets = (
 				CE77B69E2F8E52B800AF0DFF /* mintyn_app */,
+				50578D4BD9A8083E76486597 /* mintyn_appTests */,
+				4AED5D92C12B4D7B99D40A60 /* mintyn_appUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		54573F8AE7897FC8B91B100F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B27D344EE8A3F29A1ACBD42B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE77B69D2F8E52B800AF0DFF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +261,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD89690A26A6C94C64A7D51B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */,
+				61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */,
+				9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CE77B69B2F8E52B800AF0DFF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,9 +278,130 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DC68C8DBC80D770CF022A996 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E66DE32309F42F13E67F6CED /* LoginFlowUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		670AAD6FF47B99A8B180C11C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = mintyn_app;
+			target = CE77B69E2F8E52B800AF0DFF /* mintyn_app */;
+			targetProxy = 4C2F9E63A89F94D161CCB298 /* PBXContainerItemProxy */;
+		};
+		9B0F705611589F4E53C752F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = mintyn_app;
+			target = CE77B69E2F8E52B800AF0DFF /* mintyn_app */;
+			targetProxy = 51D3394D29F98F822D1A253B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		35E5FB10F6B530FE3FDF74D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5599XTZQW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "co.chuksDev.mintyn-appUITests";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mintyn_app;
+			};
+			name = Debug;
+		};
+		48091B7BF660616545FBA186 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5599XTZQW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "co.chuksDev.mintyn-appTests";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mintyn_app.app/mintyn_app";
+				TEST_TARGET_NAME = mintyn_app;
+			};
+			name = Debug;
+		};
+		4A013257BDB00B1FF02F06E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5599XTZQW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "co.chuksDev.mintyn-appUITests";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mintyn_app;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8675BAFE632BF160A0C912EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5599XTZQW9;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "co.chuksDev.mintyn-appTests";
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mintyn_app.app/mintyn_app";
+				TEST_TARGET_NAME = mintyn_app;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		CE77B6A82F8E52BB00AF0DFF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -255,12 +532,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5599XTZQW9;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -283,12 +556,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5599XTZQW9;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,6 +574,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		129BD7033C4E23C45081AC35 /* Build configuration list for PBXNativeTarget "mintyn_appUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A013257BDB00B1FF02F06E6 /* Release */,
+				35E5FB10F6B530FE3FDF74D5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		81D1626FDE0C110281AB041D /* Build configuration list for PBXNativeTarget "mintyn_appTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8675BAFE632BF160A0C912EF /* Release */,
+				48091B7BF660616545FBA186 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CE77B69A2F8E52B800AF0DFF /* Build configuration list for PBXProject "mintyn_app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
