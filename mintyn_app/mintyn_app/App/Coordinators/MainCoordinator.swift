@@ -15,13 +15,47 @@ final class MainCoordinator: Coordinator {
     }
 
     func start() {
-        let homeViewController = HomeViewController()
-        homeViewController.onLogoutRequested = { [weak self] in
+        let homeViewModel = HomeViewModel(dashboardService: HomeDashboardService())
+        let homeViewController = HomeViewController(viewModel: homeViewModel)
+
+        let investViewController = UnavailableFeatureViewController(
+            featureTitle: "Invest",
+            messageText: "Screen not available in this demo yet.",
+            symbolName: "chart.bar.doc.horizontal"
+        )
+        let menuViewController = UnavailableFeatureViewController(
+            featureTitle: "Menu",
+            messageText: "Screen not available in this demo yet.",
+            symbolName: "square.grid.2x2"
+        )
+        let transactionsViewController = UnavailableFeatureViewController(
+            featureTitle: "Transactions",
+            messageText: "Screen not available in this demo yet.",
+            symbolName: "list.bullet.rectangle"
+        )
+        let settingsViewController = UnavailableFeatureViewController(
+            featureTitle: "Settings",
+            messageText: "Screen not available in this demo yet.",
+            symbolName: "gearshape.2",
+            actionTitle: "Logout",
+            actionAccessibilityIdentifier: "settingsLogoutButton"
+        )
+        settingsViewController.onActionRequested = { [weak self] in
             self?.tokenStore.clearToken()
             self?.onLogout?()
         }
 
+        let mainTabsViewController = MainTabsViewController(
+            viewControllers: [
+                .home: homeViewController,
+                .invest: investViewController,
+                .menu: menuViewController,
+                .transactions: transactionsViewController,
+                .settings: settingsViewController
+            ]
+        )
+
         navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.setViewControllers([homeViewController], animated: true)
+        navigationController.setViewControllers([mainTabsViewController], animated: true)
     }
 }

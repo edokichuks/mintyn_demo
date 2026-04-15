@@ -6,8 +6,12 @@ final class LoginFlowUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
+        launchApp()
+    }
+
+    private func launchApp(additionalArguments: [String] = []) {
         app = XCUIApplication()
-        app.launchArguments = ["--ui-testing-reset-auth"]
+        app.launchArguments = ["--ui-testing-reset-auth"] + additionalArguments
         app.launch()
     }
 
@@ -66,7 +70,7 @@ final class LoginFlowUITests: XCTestCase {
         XCTAssertEqual(errorLabel.label, "Invalid phone number or password.")
     }
 
-    func test_successfulLogin_navigatesToHomeAndCanLogout() {
+    func test_successfulLogin_navigatesToHomeAndCanLogoutFromSettings() {
         app.textFields["loginPhoneTextField"].tap()
         app.textFields["loginPhoneTextField"].typeText("8021234567")
 
@@ -75,11 +79,71 @@ final class LoginFlowUITests: XCTestCase {
 
         app.buttons["loginSubmitButton"].tap()
 
-        XCTAssertTrue(app.staticTexts["homeTitleLabel"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.otherElements["homeQuickAccessSection"].waitForExistence(timeout: 4))
 
-        app.buttons["homeLogoutButton"].tap()
+        app.buttons["mainTabSettingsButton"].tap()
+        XCTAssertEqual(app.otherElements["mainTabBar"].value as? String, "Settings selected")
+        XCTAssertTrue(app.buttons["settingsLogoutButton"].waitForExistence(timeout: 2))
+
+        app.buttons["settingsLogoutButton"].tap()
 
         XCTAssertTrue(app.textFields["loginPhoneTextField"].waitForExistence(timeout: 3))
+    }
+
+    func test_authenticatedHome_displaysDashboardSections() {
+        app.textFields["loginPhoneTextField"].tap()
+        app.textFields["loginPhoneTextField"].typeText("8021234567")
+
+        app.secureTextFields["loginPasswordTextField"].tap()
+        app.secureTextFields["loginPasswordTextField"].typeText("password")
+
+        app.buttons["loginSubmitButton"].tap()
+
+        XCTAssertTrue(app.otherElements["homeHeaderSection"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.otherElements["homeQuickAccessSection"].exists)
+        XCTAssertTrue(app.otherElements["homeExploreSection"].exists)
+        XCTAssertTrue(app.otherElements["homeRecentTransactionsSection"].exists)
+    }
+
+    func test_bottomNavigation_switchesBetweenPlaceholderTabs() {
+        app.textFields["loginPhoneTextField"].tap()
+        app.textFields["loginPhoneTextField"].typeText("8021234567")
+
+        app.secureTextFields["loginPasswordTextField"].tap()
+        app.secureTextFields["loginPasswordTextField"].typeText("password")
+
+        app.buttons["loginSubmitButton"].tap()
+
+        XCTAssertTrue(app.otherElements["homeQuickAccessSection"].waitForExistence(timeout: 4))
+
+        app.buttons["mainTabInvestButton"].tap()
+        XCTAssertTrue(app.otherElements["unavailableInvestScreen"].waitForExistence(timeout: 2))
+
+        app.buttons["mainTabMenuButton"].tap()
+        XCTAssertTrue(app.otherElements["unavailableMenuScreen"].waitForExistence(timeout: 2))
+
+        app.buttons["mainTabTransactionsButton"].tap()
+        XCTAssertTrue(app.otherElements["unavailableTransactionsScreen"].waitForExistence(timeout: 2))
+    }
+
+    func test_homeErrorLaunchArgument_showsRetryFlow() {
+        app.terminate()
+        launchApp(additionalArguments: ["--ui-testing-home-error"])
+
+        app.textFields["loginPhoneTextField"].tap()
+        app.textFields["loginPhoneTextField"].typeText("8021234567")
+
+        app.secureTextFields["loginPasswordTextField"].tap()
+        app.secureTextFields["loginPasswordTextField"].typeText("password")
+
+        app.buttons["loginSubmitButton"].tap()
+
+        XCTAssertTrue(app.otherElements["homeErrorState"].waitForExistence(timeout: 4))
+        XCTAssertTrue(app.buttons["homeRetryButton"].exists)
+
+        app.buttons["homeRetryButton"].tap()
+
+        XCTAssertTrue(app.otherElements["homeErrorState"].waitForExistence(timeout: 2))
     }
 
     func test_forgotPassword_pushesPlaceholderAndReturnsToLogin() {

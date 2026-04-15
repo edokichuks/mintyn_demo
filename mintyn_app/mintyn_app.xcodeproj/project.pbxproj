@@ -10,6 +10,7 @@
 		2D756C197C15DBEC263B63FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE62AB0736F20CD23A963C1C /* Foundation.framework */; };
 		432C14DFAE60A3225BEAB227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE62AB0736F20CD23A963C1C /* Foundation.framework */; };
 		61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */; };
+		79A0CBAB1D2E3F4051627384 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */; };
 		9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F39281966431020CA1D342 /* MockTokenStore.swift */; };
 		97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */; };
 		E66DE32309F42F13E67F6CED /* LoginFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		13F39281966431020CA1D342 /* MockTokenStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockTokenStore.swift; sourceTree = "<group>"; };
+		79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginFlowUITests.swift; sourceTree = "<group>"; };
 		8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
 		A27F17D422651450F27294E9 /* mintyn_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mintyn_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				F8E4403865CA207E0BDD8226 /* Helpers */,
+				79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */,
 				EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */,
 			);
 			path = mintyn_appTests;
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A0CBAB1D2E3F4051627384 /* HomeViewModelTests.swift in Sources */,
 				97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */,
 				61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */,
 				9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */,

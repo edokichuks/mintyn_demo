@@ -5,8 +5,9 @@
 A **UIKit-based iOS application** that recreates key flows from the Mintyn app:
 
 * **Login (mocked)**
-* **Home tab**
-* **Settings tab**
+* **Home dashboard**
+* **Custom bottom navigation**
+* **Placeholder authenticated tabs**
 
 The app uses a **mock authentication flow** (no backend integration) and focuses on **UI structure, navigation, and clean architecture**. It also includes **unit and UI tests** for critical flows.
 
@@ -40,11 +41,14 @@ The app uses a **mock authentication flow** (no backend integration) and focuses
 * **Authentication Layer**
 
   * Mock service to simulate login/logout
-* **Tab Bar Controller**
+* **Main Tab Shell**
 
   * Hosts:
 
     * Home
+    * Invest
+    * Menu
+    * Transactions
     * Settings
 
 #### Suggested Folder Structure
@@ -68,9 +72,12 @@ The app uses a **mock authentication flow** (no backend integration) and focuses
 ```
 LoginViewController
    ↓ (successful mock login)
-MainTabBarController
+MainTabsViewController
    ├── HomeViewController
-   └── SettingsViewController
+   ├── UnavailableFeatureViewController (Invest)
+   ├── UnavailableFeatureViewController (Menu)
+   ├── UnavailableFeatureViewController (Transactions)
+   └── UnavailableFeatureViewController (Settings + Logout)
 ```
 
 ---
@@ -91,33 +98,28 @@ MainTabBarController
   * Call mock auth service
   * Navigate to Home tab
 
-#### 4.2 Home Tab
+#### 4.2 Home Dashboard
 
-* Static or mock data reflecting:
+* Mock state-driven dashboard reflecting:
 
-  * Account balance
-  * Quick actions (UI only)
-  * Recent transactions (optional mock list)
+  * Account summary
+  * Transfer and add-money actions
+  * Promo tiles
+  * Quick access shortcuts
+  * Explore cards
+  * Recent-transactions empty state
 
-#### 4.3 Settings Tab
+#### 4.3 Authenticated Tabs
 
-Grouped into sections:
+* Custom bottom navigation with:
 
-##### System
-
-* App version (static)
-* Theme (optional placeholder)
-* Notifications (toggle UI only)
-
-##### Legal
-
-* Terms & Conditions (static screen or placeholder)
-* Privacy Policy (static screen or placeholder)
-
-##### Logout
-
-* Clears session (mock)
-* Navigates back to Login screen
+  * Home
+  * Invest
+  * Menu
+  * Transactions
+  * Settings
+* Non-home destinations currently use a shared "screen not available" placeholder.
+* Settings owns the logout action and returns the user to Login.
 
 ---
 
@@ -133,6 +135,7 @@ Grouped into sections:
 
   * Input validation
   * State transitions
+  * Home loading, error, retry, and empty states
 
 #### UI Tests
 
@@ -141,10 +144,10 @@ Grouped into sections:
   * Enter credentials → navigate to Home
 * Tab navigation:
 
-  * Home ↔ Settings switching
+  * Home ↔ authenticated tab switching
 * Logout flow:
 
-  * Logout → return to Login screen
+  * Settings logout → return to Login screen
 
 ---
 
@@ -223,4 +226,3 @@ Grouped into sections:
 * Persistent session handling (Keychain/UserDefaults)
 * Improved UI components and reuse
 * Snapshot testing for UI consistency
-
