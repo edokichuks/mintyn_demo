@@ -10,7 +10,7 @@ final class MainTabBarItemView: UIControl {
     private let style: Style
     private let selectionBackgroundView = UIView()
     private let iconContainerView = UIView()
-    private let centerButtonGradientLayer = CAGradientLayer()
+    private let gradientContainerView = GradientContainerView()
     private let iconImageView = UIImageView()
     private let customLogoView = MintynLogoView()
     private let titleLabel = AppLabel(
@@ -46,12 +46,9 @@ final class MainTabBarItemView: UIControl {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        centerButtonGradientLayer.frame = iconContainerView.bounds
-        centerButtonGradientLayer.cornerRadius = iconContainerView.layer.cornerRadius
-        iconContainerView.layer.shadowPath = UIBezierPath(
-            roundedRect: iconContainerView.bounds,
-            cornerRadius: iconContainerView.layer.cornerRadius
-        ).cgPath
+        let cornerRadius: CGFloat = style == .floatingCenter ? 16 : iconContainerView.bounds.height / 2
+        gradientContainerView.layer.cornerRadius = cornerRadius
+        iconContainerView.layer.cornerRadius = cornerRadius
         selectionBackgroundView.layer.cornerRadius = selectionBackgroundView.bounds.height / 2
     }
 
@@ -68,8 +65,12 @@ final class MainTabBarItemView: UIControl {
         iconContainerView.translatesAutoresizingMaskIntoConstraints = false
         iconContainerView.layer.cornerCurve = .continuous
         iconContainerView.isUserInteractionEnabled = false
+        
+        gradientContainerView.translatesAutoresizingMaskIntoConstraints = false
+        gradientContainerView.layer.cornerCurve = .continuous
+        gradientContainerView.isUserInteractionEnabled = false
 
-        let iconSide: CGFloat = style == .floatingCenter ? 64 : 24
+        let iconSide: CGFloat = style == .floatingCenter ? 56 : 24
         let iconPointSize: CGFloat = style == .floatingCenter ? 24 : 20
 
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +82,7 @@ final class MainTabBarItemView: UIControl {
         iconImageView.isUserInteractionEnabled = false
         
         customLogoView.translatesAutoresizingMaskIntoConstraints = false
+        customLogoView.iconTintColor = AppColors.textWhite
         customLogoView.isUserInteractionEnabled = false
 
         titleLabel.text = tab.title
@@ -94,6 +96,7 @@ final class MainTabBarItemView: UIControl {
 
         addSubview(selectionBackgroundView)
         addSubview(contentStackView)
+        iconContainerView.addSubview(gradientContainerView)
         iconContainerView.addSubview(iconImageView)
         iconContainerView.addSubview(customLogoView)
         contentStackView.addArrangedSubview(iconContainerView)
@@ -110,33 +113,40 @@ final class MainTabBarItemView: UIControl {
 
             iconContainerView.widthAnchor.constraint(equalToConstant: iconSide),
             iconContainerView.heightAnchor.constraint(equalToConstant: iconSide),
+            
+            gradientContainerView.topAnchor.constraint(equalTo: iconContainerView.topAnchor),
+            gradientContainerView.leadingAnchor.constraint(equalTo: iconContainerView.leadingAnchor),
+            gradientContainerView.trailingAnchor.constraint(equalTo: iconContainerView.trailingAnchor),
+            gradientContainerView.bottomAnchor.constraint(equalTo: iconContainerView.bottomAnchor),
 
             iconImageView.centerXAnchor.constraint(equalTo: iconContainerView.centerXAnchor),
             iconImageView.centerYAnchor.constraint(equalTo: iconContainerView.centerYAnchor),
             
             customLogoView.centerXAnchor.constraint(equalTo: iconContainerView.centerXAnchor),
             customLogoView.centerYAnchor.constraint(equalTo: iconContainerView.centerYAnchor),
-            customLogoView.widthAnchor.constraint(equalToConstant: 28),
-            customLogoView.heightAnchor.constraint(equalToConstant: 28)
+            customLogoView.widthAnchor.constraint(equalToConstant: 24),
+            customLogoView.heightAnchor.constraint(equalToConstant: 24)
         ])
 
         if style == .standard {
             selectionBackgroundView.isHidden = true
             iconContainerView.backgroundColor = .clear
+            gradientContainerView.isHidden = true
             customLogoView.isHidden = true
             iconImageView.isHidden = false
             NSLayoutConstraint.activate([
                 widthAnchor.constraint(greaterThanOrEqualToConstant: 54)
             ])
         } else {
-            iconContainerView.layer.cornerRadius = 24
             selectionBackgroundView.isHidden = true
+            gradientContainerView.isHidden = false
             customLogoView.isHidden = false
             iconImageView.isHidden = true
-            iconContainerView.layer.insertSublayer(centerButtonGradientLayer, at: 0)
+            
             iconContainerView.layer.shadowOpacity = 1
             iconContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
             iconContainerView.layer.shadowRadius = 14
+            
             NSLayoutConstraint.activate([
                 widthAnchor.constraint(equalToConstant: 80)
             ])
@@ -164,12 +174,12 @@ final class MainTabBarItemView: UIControl {
     private func updateFloatingButtonChrome() {
         guard style == .floatingCenter else { return }
 
-        centerButtonGradientLayer.colors = [
-            AppColors.homeNavigationCenterButtonStart.cgColor,
-            AppColors.homeNavigationCenterButtonEnd.cgColor
+        gradientContainerView.colors = [
+            AppColors.homeNavigationCenterButtonStart,
+            AppColors.homeNavigationCenterButtonEnd
         ]
-        centerButtonGradientLayer.startPoint = CGPoint(x: 0.15, y: 0.2)
-        centerButtonGradientLayer.endPoint = CGPoint(x: 0.85, y: 1)
+        gradientContainerView.startPoint = CGPoint(x: 0.15, y: 0.2)
+        gradientContainerView.endPoint = CGPoint(x: 0.85, y: 1)
         iconContainerView.layer.shadowColor = AppColors.homeNavigationCenterButtonShadow.cgColor
     }
 }
