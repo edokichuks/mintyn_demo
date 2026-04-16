@@ -12,6 +12,7 @@ final class MainTabBarItemView: UIControl {
     private let iconContainerView = UIView()
     private let centerButtonGradientLayer = CAGradientLayer()
     private let iconImageView = UIImageView()
+    private let customLogoView = MintynLogoView()
     private let titleLabel = AppLabel(
         style: AppTextStyles.homeNavigationLabel,
         color: AppColors.homeNavigationInactive,
@@ -46,6 +47,7 @@ final class MainTabBarItemView: UIControl {
     override func layoutSubviews() {
         super.layoutSubviews()
         centerButtonGradientLayer.frame = iconContainerView.bounds
+        centerButtonGradientLayer.cornerRadius = iconContainerView.layer.cornerRadius
         iconContainerView.layer.shadowPath = UIBezierPath(
             roundedRect: iconContainerView.bounds,
             cornerRadius: iconContainerView.layer.cornerRadius
@@ -67,7 +69,7 @@ final class MainTabBarItemView: UIControl {
         iconContainerView.layer.cornerCurve = .continuous
         iconContainerView.isUserInteractionEnabled = false
 
-        let iconSide: CGFloat = style == .floatingCenter ? 68 : 24
+        let iconSide: CGFloat = style == .floatingCenter ? 64 : 24
         let iconPointSize: CGFloat = style == .floatingCenter ? 24 : 20
 
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +79,9 @@ final class MainTabBarItemView: UIControl {
         )
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.isUserInteractionEnabled = false
+        
+        customLogoView.translatesAutoresizingMaskIntoConstraints = false
+        customLogoView.isUserInteractionEnabled = false
 
         titleLabel.text = tab.title
         titleLabel.isUserInteractionEnabled = false
@@ -90,6 +95,7 @@ final class MainTabBarItemView: UIControl {
         addSubview(selectionBackgroundView)
         addSubview(contentStackView)
         iconContainerView.addSubview(iconImageView)
+        iconContainerView.addSubview(customLogoView)
         contentStackView.addArrangedSubview(iconContainerView)
         contentStackView.addArrangedSubview(titleLabel)
 
@@ -106,18 +112,27 @@ final class MainTabBarItemView: UIControl {
             iconContainerView.heightAnchor.constraint(equalToConstant: iconSide),
 
             iconImageView.centerXAnchor.constraint(equalTo: iconContainerView.centerXAnchor),
-            iconImageView.centerYAnchor.constraint(equalTo: iconContainerView.centerYAnchor)
+            iconImageView.centerYAnchor.constraint(equalTo: iconContainerView.centerYAnchor),
+            
+            customLogoView.centerXAnchor.constraint(equalTo: iconContainerView.centerXAnchor),
+            customLogoView.centerYAnchor.constraint(equalTo: iconContainerView.centerYAnchor),
+            customLogoView.widthAnchor.constraint(equalToConstant: 28),
+            customLogoView.heightAnchor.constraint(equalToConstant: 28)
         ])
 
         if style == .standard {
             selectionBackgroundView.isHidden = true
             iconContainerView.backgroundColor = .clear
+            customLogoView.isHidden = true
+            iconImageView.isHidden = false
             NSLayoutConstraint.activate([
                 widthAnchor.constraint(greaterThanOrEqualToConstant: 54)
             ])
         } else {
             iconContainerView.layer.cornerRadius = 24
             selectionBackgroundView.isHidden = true
+            customLogoView.isHidden = false
+            iconImageView.isHidden = true
             iconContainerView.layer.insertSublayer(centerButtonGradientLayer, at: 0)
             iconContainerView.layer.shadowOpacity = 1
             iconContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
@@ -140,6 +155,7 @@ final class MainTabBarItemView: UIControl {
             accessibilityValue = isSelected ? "Selected" : "Not selected"
         case .floatingCenter:
             iconImageView.tintColor = AppColors.textOnBrand
+            customLogoView.iconTintColor = AppColors.textOnBrand
             titleLabel.textColor = AppColors.homeNavigationInactive
             accessibilityValue = isSelected ? "Selected" : "Not selected"
         }
