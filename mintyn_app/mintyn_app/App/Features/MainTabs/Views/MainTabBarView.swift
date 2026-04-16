@@ -4,8 +4,7 @@ final class MainTabBarView: UIView {
     var onTabSelected: ((MainTab) -> Void)?
 
     private let backgroundView = UIView()
-    private let centerCutoutView = UIView()
-    private let topBorderView = UIView()
+    private let shapeLayer = CAShapeLayer()
     private let leadingStackView = UIStackView()
     private let trailingStackView = UIStackView()
     private let centerItemView = MainTabBarItemView(tab: .menu, style: .floatingCenter)
@@ -30,13 +29,7 @@ final class MainTabBarView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundView.layer.shadowColor = AppColors.homeNavigationShadow.cgColor
-        backgroundView.layer.shadowPath = UIBezierPath(
-            roundedRect: backgroundView.bounds,
-            byRoundingCorners: [.bottomLeft, .bottomRight],
-            cornerRadii: CGSize(width: 18, height: 18)
-        ).cgPath
-        centerCutoutView.layer.cornerRadius = centerCutoutView.bounds.height / 2
+        updateShapeLayer()
     }
 
     func setSelectedTab(_ tab: MainTab) {
@@ -50,25 +43,14 @@ final class MainTabBarView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         applyChrome()
+        updateShapeLayer()
     }
 
     private func setup() {
         backgroundColor = .clear
 
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.clipsToBounds = false
-        backgroundView.layer.cornerRadius = 18
-        backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        backgroundView.layer.shadowOpacity = 1
-        backgroundView.layer.shadowRadius = 18
-        backgroundView.layer.shadowOffset = CGSize(width: 0, height: -3)
-
-        centerCutoutView.translatesAutoresizingMaskIntoConstraints = false
-        centerCutoutView.isUserInteractionEnabled = false
-        centerCutoutView.layer.cornerCurve = .continuous
-
-        topBorderView.translatesAutoresizingMaskIntoConstraints = false
-        topBorderView.isUserInteractionEnabled = false
+        backgroundView.layer.addSublayer(shapeLayer)
 
         [leadingStackView, trailingStackView].forEach { stackView in
             stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,9 +61,7 @@ final class MainTabBarView: UIView {
         }
 
         addSubview(backgroundView)
-        addSubview(centerCutoutView)
         addSubview(centerItemView)
-        backgroundView.addSubview(topBorderView)
         backgroundView.addSubview(leadingStackView)
         backgroundView.addSubview(trailingStackView)
 
@@ -95,16 +75,6 @@ final class MainTabBarView: UIView {
             backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
             backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
-
-            topBorderView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
-            topBorderView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
-            topBorderView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
-            topBorderView.heightAnchor.constraint(equalToConstant: 1),
-
-            centerCutoutView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            centerCutoutView.centerYAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 2),
-            centerCutoutView.widthAnchor.constraint(equalToConstant: 144),
-            centerCutoutView.heightAnchor.constraint(equalToConstant: 38),
 
             centerItemView.centerXAnchor.constraint(equalTo: centerXAnchor),
             centerItemView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -4),
@@ -130,10 +100,46 @@ final class MainTabBarView: UIView {
         applyChrome()
     }
 
+    private func updateShapeLayer() {
+        let width = backgroundView.bounds.width
+        let height = backgroundView.bounds.height
+        guard width > 0 else { return }
+
+        let path = UIBezierPath()
+        let cutoutWidth: CGFloat = 110
+        let cutoutDepth: CGFloat = 34
+        
+        let center = width / 2
+        let curveStartX = center - cutoutWidth / 2
+        let curveEndX = center + cutoutWidth / 2
+        
+        path.move(to: CGPoint(x: 0, y: 0))
+        path.addLine(to: CGPoint(x: curveStartX, y: 0))
+        
+        let cp1 = CGPoint(x: curveStartX + cutoutWidth * 0.25, y: 0)
+        let cp2 = CGPoint(x: curveStartX + cutoutWidth * 0.20, y: cutoutDepth)
+        let bottom = CGPoint(x: center, y: cutoutDepth)
+        path.addCurve(to: bottom, controlPoint1: cp1, controlPoint2: cp2)
+        
+        let cp3 = CGPoint(x: curveEndX - cutoutWidth * 0.20, y: cutoutDepth)
+        let cp4 = CGPoint(x: curveEndX - cutoutWidth * 0.25, y: 0)
+        path.addCurve(to: CGPoint(x: curveEndX, y: 0), controlPoint1: cp3, controlPoint2: cp4)
+        
+        path.addLine(to: CGPoint(x: width, y: 0))
+        path.addLine(to: CGPoint(x: width, y: height))
+        path.addLine(to: CGPoint(x: 0, y: height))
+        path.close()
+
+        shapeLayer.path = path.cgPath
+        shapeLayer.shadowPath = path.cgPath
+    }
+
     private func applyChrome() {
-        backgroundView.backgroundColor = AppColors.homeNavigationBackground
-        centerCutoutView.backgroundColor = AppColors.background
-        topBorderView.backgroundColor = AppColors.homeNavigationBorder
+        shapeLayer.fillColor = AppColors.homeNavigationBackground.cgColor
+        shapeLayer.shadowColor = AppColors.homeNavigationShadow.cgColor
+        shapeLayer.shadowOpacity = 1
+        shapeLayer.shadowRadius = 18
+        shapeLayer.shadowOffset = CGSize(width: 0, height: -3)
     }
 
     @objc private func tabTapped(_ sender: MainTabBarItemView) {

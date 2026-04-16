@@ -50,6 +50,7 @@ final class MainTabBarItemView: UIControl {
             roundedRect: iconContainerView.bounds,
             cornerRadius: iconContainerView.layer.cornerRadius
         ).cgPath
+        selectionBackgroundView.layer.cornerRadius = selectionBackgroundView.bounds.height / 2
     }
 
     private func setup() {
@@ -59,7 +60,6 @@ final class MainTabBarItemView: UIControl {
 
         selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         selectionBackgroundView.backgroundColor = AppColors.homeNavigationSelectedBackground
-        selectionBackgroundView.layer.cornerRadius = 26
         selectionBackgroundView.layer.cornerCurve = .continuous
         selectionBackgroundView.isUserInteractionEnabled = false
 
@@ -67,10 +67,13 @@ final class MainTabBarItemView: UIControl {
         iconContainerView.layer.cornerCurve = .continuous
         iconContainerView.isUserInteractionEnabled = false
 
+        let iconSide: CGFloat = style == .floatingCenter ? 68 : 24
+        let iconPointSize: CGFloat = style == .floatingCenter ? 24 : 20
+
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.image = UIImage(
             systemName: tab.symbolName,
-            withConfiguration: UIImage.SymbolConfiguration(pointSize: style == .floatingCenter ? 20 : 18, weight: .semibold)
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: iconPointSize, weight: .medium)
         )
         iconImageView.contentMode = .scaleAspectFit
         iconImageView.isUserInteractionEnabled = false
@@ -81,7 +84,7 @@ final class MainTabBarItemView: UIControl {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.axis = .vertical
         contentStackView.alignment = .center
-        contentStackView.spacing = style == .floatingCenter ? 8 : 6
+        contentStackView.spacing = style == .floatingCenter ? 6 : 4
         contentStackView.isUserInteractionEnabled = false
 
         addSubview(selectionBackgroundView)
@@ -90,20 +93,14 @@ final class MainTabBarItemView: UIControl {
         contentStackView.addArrangedSubview(iconContainerView)
         contentStackView.addArrangedSubview(titleLabel)
 
-        let iconSide: CGFloat = style == .floatingCenter ? 78 : 30
-        let verticalPadding: CGFloat = style == .floatingCenter ? 0 : 2
-
         NSLayoutConstraint.activate([
-            selectionBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
-            selectionBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            selectionBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            selectionBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-
             contentStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            contentStackView.topAnchor.constraint(equalTo: topAnchor),
-            contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            contentStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
-            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            contentStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            selectionBackgroundView.centerXAnchor.constraint(equalTo: contentStackView.centerXAnchor),
+            selectionBackgroundView.centerYAnchor.constraint(equalTo: contentStackView.centerYAnchor),
+            selectionBackgroundView.widthAnchor.constraint(equalTo: contentStackView.widthAnchor, constant: 32),
+            selectionBackgroundView.heightAnchor.constraint(equalTo: contentStackView.heightAnchor, constant: 16),
 
             iconContainerView.widthAnchor.constraint(equalToConstant: iconSide),
             iconContainerView.heightAnchor.constraint(equalToConstant: iconSide),
@@ -126,7 +123,7 @@ final class MainTabBarItemView: UIControl {
             iconContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
             iconContainerView.layer.shadowRadius = 14
             NSLayoutConstraint.activate([
-                widthAnchor.constraint(equalToConstant: 88)
+                widthAnchor.constraint(equalToConstant: 80)
             ])
         }
 
