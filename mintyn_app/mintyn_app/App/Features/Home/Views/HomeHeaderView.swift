@@ -1,7 +1,7 @@
 import UIKit
 
 final class HomeHeaderView: UIView {
-    private let logoMarkStackView = UIStackView()
+    private let logoImageView = UIImageView()
     private let titleLabel = AppLabel(
         style: AppFonts.scaledFont(size: 16, weight: .semibold, textStyle: .headline),
         color: AppColors.textPrimary
@@ -35,22 +35,10 @@ final class HomeHeaderView: UIView {
         logoContainer.alignment = .center
         logoContainer.spacing = 8
 
-        logoMarkStackView.translatesAutoresizingMaskIntoConstraints = false
-        logoMarkStackView.axis = .horizontal
-        logoMarkStackView.alignment = .bottom
-        logoMarkStackView.spacing = 2
-
-        [10, 14, 18].forEach { height in
-            let barView = UIView()
-            barView.translatesAutoresizingMaskIntoConstraints = false
-            barView.backgroundColor = AppColors.brandPrimary
-            barView.layer.cornerRadius = 1.5
-            logoMarkStackView.addArrangedSubview(barView)
-            NSLayoutConstraint.activate([
-                barView.widthAnchor.constraint(equalToConstant: 3),
-                barView.heightAnchor.constraint(equalToConstant: CGFloat(height))
-            ])
-        }
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        logoImageView.image = UIImage(named: "MintynLogoMark")
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         titleLabel.text = "MINTYN"
 
@@ -58,7 +46,7 @@ final class HomeHeaderView: UIView {
         actionButtonsStackView.axis = .horizontal
         actionButtonsStackView.spacing = 8
 
-        logoContainer.addArrangedSubview(logoMarkStackView)
+        logoContainer.addArrangedSubview(logoImageView)
         logoContainer.addArrangedSubview(titleLabel)
 
         let contentStackView = UIStackView(arrangedSubviews: [logoContainer, UIView(), actionButtonsStackView])
@@ -73,6 +61,8 @@ final class HomeHeaderView: UIView {
         }
 
         NSLayoutConstraint.activate([
+            logoImageView.widthAnchor.constraint(equalToConstant: 26),
+            logoImageView.heightAnchor.constraint(equalToConstant: 34),
             contentStackView.topAnchor.constraint(equalTo: topAnchor),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),

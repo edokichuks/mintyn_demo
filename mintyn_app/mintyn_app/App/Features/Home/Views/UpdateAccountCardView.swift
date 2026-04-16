@@ -8,7 +8,7 @@ final class UpdateAccountCardView: UIView {
         style: AppTextStyles.body,
         color: AppColors.textOnBrand,
         alignment: .left,
-        numberOfLines: 0
+        numberOfLines: 2
     )
     private let actionButton = UIButton(type: .system)
 
@@ -36,7 +36,7 @@ final class UpdateAccountCardView: UIView {
     func configure(title: String, message: String, buttonTitle: String) {
         titleLabel.text = title
         messageLabel.text = message
-        actionButton.setTitle(buttonTitle, for: .normal)
+        applyActionButtonTitle(buttonTitle)
     }
 
     private func setup() {
@@ -57,18 +57,21 @@ final class UpdateAccountCardView: UIView {
         iconView.tintColor = .systemRed
 
         actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.backgroundColor = AppColors.homeCardSecondaryBackground
-        actionButton.layer.cornerRadius = 16
-        actionButton.layer.cornerCurve = .continuous
-        actionButton.setTitleColor(AppColors.textPrimary, for: .normal)
-        actionButton.titleLabel?.font = AppTextStyles.homeSmallAction
-        actionButton.setImage(
-            UIImage(systemName: "chevron.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold)),
-            for: .normal
+        var buttonConfiguration = UIButton.Configuration.plain()
+        buttonConfiguration.baseForegroundColor = AppColors.textPrimary
+        buttonConfiguration.image = UIImage(
+            systemName: "chevron.right",
+            withConfiguration: UIImage.SymbolConfiguration(pointSize: 12, weight: .semibold)
         )
-        actionButton.semanticContentAttribute = .forceRightToLeft
-        actionButton.tintColor = AppColors.textPrimary
-        actionButton.contentEdgeInsets = UIEdgeInsets(top: 9, left: 14, bottom: 9, right: 14)
+        buttonConfiguration.imagePlacement = .trailing
+        buttonConfiguration.imagePadding = 10
+        buttonConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 18, bottom: 12, trailing: 18)
+        buttonConfiguration.background.backgroundColor = AppColors.homeCardSecondaryBackground
+        buttonConfiguration.background.cornerRadius = 16
+        actionButton.configuration = buttonConfiguration
+        actionButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+        actionButton.setContentCompressionResistancePriority(.required, for: .vertical)
+        actionButton.setContentHuggingPriority(.required, for: .horizontal)
 
         let titleRow = UIStackView(arrangedSubviews: [iconView, titleLabel])
         titleRow.translatesAutoresizingMaskIntoConstraints = false
@@ -85,11 +88,23 @@ final class UpdateAccountCardView: UIView {
         addSubview(contentStackView)
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 128),
+            heightAnchor.constraint(greaterThanOrEqualToConstant: 168),
             contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 18),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            contentStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
-            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16)
+            contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16),
+            messageLabel.widthAnchor.constraint(equalTo: contentStackView.widthAnchor),
+            actionButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 152),
+            actionButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44)
         ])
+    }
+
+    private func applyActionButtonTitle(_ title: String) {
+        var attributes = AttributeContainer()
+        attributes.font = AppTextStyles.homeSmallAction
+
+        var configuration = actionButton.configuration
+        configuration?.attributedTitle = AttributedString(title, attributes: attributes)
+        actionButton.configuration = configuration
     }
 }

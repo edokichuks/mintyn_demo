@@ -55,9 +55,10 @@ final class MainTabsViewController: UIViewController {
             contentContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            tabBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            tabBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tabBarView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            tabBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tabBarView.heightAnchor.constraint(equalToConstant: 118)
         ])
     }
 

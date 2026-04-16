@@ -4,6 +4,8 @@ final class MainTabBarView: UIView {
     var onTabSelected: ((MainTab) -> Void)?
 
     private let backgroundView = UIView()
+    private let centerCutoutView = UIView()
+    private let topBorderView = UIView()
     private let leadingStackView = UIStackView()
     private let trailingStackView = UIStackView()
     private let centerItemView = MainTabBarItemView(tab: .menu, style: .floatingCenter)
@@ -28,7 +30,13 @@ final class MainTabBarView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.shadowColor = AppColors.homeNavigationShadow.cgColor
+        backgroundView.layer.shadowColor = AppColors.homeNavigationShadow.cgColor
+        backgroundView.layer.shadowPath = UIBezierPath(
+            roundedRect: backgroundView.bounds,
+            byRoundingCorners: [.bottomLeft, .bottomRight],
+            cornerRadii: CGSize(width: 18, height: 18)
+        ).cgPath
+        centerCutoutView.layer.cornerRadius = centerCutoutView.bounds.height / 2
     }
 
     func setSelectedTab(_ tab: MainTab) {
@@ -39,16 +47,28 @@ final class MainTabBarView: UIView {
         accessibilityValue = "\(tab.title) selected"
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        applyChrome()
+    }
+
     private func setup() {
         backgroundColor = .clear
-        layer.shadowOpacity = 1
-        layer.shadowRadius = 24
-        layer.shadowOffset = CGSize(width: 0, height: 8)
 
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundView.backgroundColor = AppColors.homeNavigationBackground
-        backgroundView.layer.cornerRadius = 28
-        backgroundView.layer.cornerCurve = .continuous
+        backgroundView.clipsToBounds = false
+        backgroundView.layer.cornerRadius = 18
+        backgroundView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        backgroundView.layer.shadowOpacity = 1
+        backgroundView.layer.shadowRadius = 18
+        backgroundView.layer.shadowOffset = CGSize(width: 0, height: -3)
+
+        centerCutoutView.translatesAutoresizingMaskIntoConstraints = false
+        centerCutoutView.isUserInteractionEnabled = false
+        centerCutoutView.layer.cornerCurve = .continuous
+
+        topBorderView.translatesAutoresizingMaskIntoConstraints = false
+        topBorderView.isUserInteractionEnabled = false
 
         [leadingStackView, trailingStackView].forEach { stackView in
             stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -59,7 +79,9 @@ final class MainTabBarView: UIView {
         }
 
         addSubview(backgroundView)
+        addSubview(centerCutoutView)
         addSubview(centerItemView)
+        backgroundView.addSubview(topBorderView)
         backgroundView.addSubview(leadingStackView)
         backgroundView.addSubview(trailingStackView)
 
@@ -72,20 +94,30 @@ final class MainTabBarView: UIView {
             backgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
             backgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            backgroundView.heightAnchor.constraint(equalToConstant: 76),
+            backgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 24),
 
-            centerItemView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            centerItemView.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -10),
+            topBorderView.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            topBorderView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor),
+            topBorderView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor),
+            topBorderView.heightAnchor.constraint(equalToConstant: 1),
 
-            leadingStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 10),
-            leadingStackView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
+            centerCutoutView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerCutoutView.centerYAnchor.constraint(equalTo: backgroundView.topAnchor, constant: 2),
+            centerCutoutView.widthAnchor.constraint(equalToConstant: 144),
+            centerCutoutView.heightAnchor.constraint(equalToConstant: 38),
+
+            centerItemView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerItemView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -4),
+
+            leadingStackView.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 12),
             leadingStackView.trailingAnchor.constraint(equalTo: centerItemView.leadingAnchor, constant: -8),
-            leadingStackView.heightAnchor.constraint(equalToConstant: 58),
+            leadingStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -3),
+            leadingStackView.heightAnchor.constraint(equalToConstant: 60),
 
             trailingStackView.leadingAnchor.constraint(equalTo: centerItemView.trailingAnchor, constant: 8),
-            trailingStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -10),
-            trailingStackView.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
-            trailingStackView.heightAnchor.constraint(equalToConstant: 58),
+            trailingStackView.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -12),
+            trailingStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -3),
+            trailingStackView.heightAnchor.constraint(equalToConstant: 60),
 
             centerItemView.topAnchor.constraint(equalTo: topAnchor)
         ])
@@ -94,6 +126,14 @@ final class MainTabBarView: UIView {
             itemView.addTarget(self, action: #selector(tabTapped(_:)), for: .touchUpInside)
         }
         centerItemView.addTarget(self, action: #selector(tabTapped(_:)), for: .touchUpInside)
+
+        applyChrome()
+    }
+
+    private func applyChrome() {
+        backgroundView.backgroundColor = AppColors.homeNavigationBackground
+        centerCutoutView.backgroundColor = AppColors.background
+        topBorderView.backgroundColor = AppColors.homeNavigationBorder
     }
 
     @objc private func tabTapped(_ sender: MainTabBarItemView) {

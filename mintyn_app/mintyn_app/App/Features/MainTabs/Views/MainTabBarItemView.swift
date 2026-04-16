@@ -10,6 +10,7 @@ final class MainTabBarItemView: UIControl {
     private let style: Style
     private let selectionBackgroundView = UIView()
     private let iconContainerView = UIView()
+    private let centerButtonGradientLayer = CAGradientLayer()
     private let iconImageView = UIImageView()
     private let titleLabel = AppLabel(
         style: AppTextStyles.homeNavigationLabel,
@@ -39,6 +40,16 @@ final class MainTabBarItemView: UIControl {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         applySelectionState()
+        updateFloatingButtonChrome()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        centerButtonGradientLayer.frame = iconContainerView.bounds
+        iconContainerView.layer.shadowPath = UIBezierPath(
+            roundedRect: iconContainerView.bounds,
+            cornerRadius: iconContainerView.layer.cornerRadius
+        ).cgPath
     }
 
     private func setup() {
@@ -48,7 +59,7 @@ final class MainTabBarItemView: UIControl {
 
         selectionBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         selectionBackgroundView.backgroundColor = AppColors.homeNavigationSelectedBackground
-        selectionBackgroundView.layer.cornerRadius = 20
+        selectionBackgroundView.layer.cornerRadius = 26
         selectionBackgroundView.layer.cornerCurve = .continuous
         selectionBackgroundView.isUserInteractionEnabled = false
 
@@ -70,7 +81,7 @@ final class MainTabBarItemView: UIControl {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.axis = .vertical
         contentStackView.alignment = .center
-        contentStackView.spacing = 6
+        contentStackView.spacing = style == .floatingCenter ? 8 : 6
         contentStackView.isUserInteractionEnabled = false
 
         addSubview(selectionBackgroundView)
@@ -79,14 +90,14 @@ final class MainTabBarItemView: UIControl {
         contentStackView.addArrangedSubview(iconContainerView)
         contentStackView.addArrangedSubview(titleLabel)
 
-        let iconSide: CGFloat = style == .floatingCenter ? 58 : 28
-        let verticalPadding: CGFloat = style == .floatingCenter ? 0 : 10
+        let iconSide: CGFloat = style == .floatingCenter ? 78 : 30
+        let verticalPadding: CGFloat = style == .floatingCenter ? 0 : 2
 
         NSLayoutConstraint.activate([
             selectionBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: verticalPadding),
             selectionBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor),
             selectionBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            selectionBackgroundView.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            selectionBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
 
             contentStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentStackView.topAnchor.constraint(equalTo: topAnchor),
@@ -105,17 +116,21 @@ final class MainTabBarItemView: UIControl {
             selectionBackgroundView.isHidden = true
             iconContainerView.backgroundColor = .clear
             NSLayoutConstraint.activate([
-                widthAnchor.constraint(greaterThanOrEqualToConstant: 60)
+                widthAnchor.constraint(greaterThanOrEqualToConstant: 54)
             ])
         } else {
-            iconContainerView.backgroundColor = AppColors.brandPrimary
-            iconContainerView.layer.cornerRadius = iconSide / 2
+            iconContainerView.layer.cornerRadius = 24
             selectionBackgroundView.isHidden = true
+            iconContainerView.layer.insertSublayer(centerButtonGradientLayer, at: 0)
+            iconContainerView.layer.shadowOpacity = 1
+            iconContainerView.layer.shadowOffset = CGSize(width: 0, height: 8)
+            iconContainerView.layer.shadowRadius = 14
             NSLayoutConstraint.activate([
-                widthAnchor.constraint(equalToConstant: 74)
+                widthAnchor.constraint(equalToConstant: 88)
             ])
         }
 
+        updateFloatingButtonChrome()
         applySelectionState()
     }
 
@@ -127,10 +142,21 @@ final class MainTabBarItemView: UIControl {
             titleLabel.textColor = isSelected ? AppColors.brandPrimary : AppColors.homeNavigationInactive
             accessibilityValue = isSelected ? "Selected" : "Not selected"
         case .floatingCenter:
-            iconContainerView.backgroundColor = AppColors.brandPrimary
             iconImageView.tintColor = AppColors.textOnBrand
-            titleLabel.textColor = isSelected ? AppColors.brandPrimary : AppColors.homeNavigationInactive
+            titleLabel.textColor = AppColors.homeNavigationInactive
             accessibilityValue = isSelected ? "Selected" : "Not selected"
         }
+    }
+
+    private func updateFloatingButtonChrome() {
+        guard style == .floatingCenter else { return }
+
+        centerButtonGradientLayer.colors = [
+            AppColors.homeNavigationCenterButtonStart.cgColor,
+            AppColors.homeNavigationCenterButtonEnd.cgColor
+        ]
+        centerButtonGradientLayer.startPoint = CGPoint(x: 0.15, y: 0.2)
+        centerButtonGradientLayer.endPoint = CGPoint(x: 0.85, y: 1)
+        iconContainerView.layer.shadowColor = AppColors.homeNavigationCenterButtonShadow.cgColor
     }
 }

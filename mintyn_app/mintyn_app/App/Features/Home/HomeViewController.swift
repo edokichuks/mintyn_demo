@@ -100,7 +100,7 @@ final class HomeViewController: UIViewController {
             contentStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18),
             contentStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 18),
             contentStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18),
-            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -132),
+            contentStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -148),
 
             stateContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stateContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),

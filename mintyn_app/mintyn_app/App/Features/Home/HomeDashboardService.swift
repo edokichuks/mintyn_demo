@@ -41,7 +41,7 @@ final class HomeDashboardService: HomeDashboardServiceProtocol {
             balanceText: "₦0.00",
             accountMetadataText: "Individual · 1101336895 · Tier 2",
             updateAccountTitle: "Update Account",
-            updateAccountMessage: "Update your account to get unlimited access to your account",
+            updateAccountMessage: "Update your account to get unlimited access to\nyour account",
             updateAccountButtonTitle: "Update now",
             promoTiles: [
                 HomePromoTile(title: "Marketplace", symbolName: "cart.fill", style: .marketplace),

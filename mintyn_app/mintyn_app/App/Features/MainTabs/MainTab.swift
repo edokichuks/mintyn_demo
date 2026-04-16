@@ -31,7 +31,7 @@ enum MainTab: String, CaseIterable {
         case .menu:
             return "square.grid.2x2.fill"
         case .transactions:
-            return "creditcard.fill"
+            return "wallet.pass.fill"
         case .settings:
             return "gearshape.fill"
         }
