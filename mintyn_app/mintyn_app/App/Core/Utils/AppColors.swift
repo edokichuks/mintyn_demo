@@ -48,6 +48,12 @@ enum AppColors {
     static let homeExploreIllustrationBackground = dynamic(light: "#E7E0D0", dark: "#37312A")
     static let homeEmptyStateIcon = dynamic(light: "#7A756D", dark: "#6E6861")
     static let homeEmptyStateBackground = dynamic(light: "#F6F4EF", dark: "#1F1D1D")
+    static let settingsBackground = dynamic(light: "#FCFBF8", dark: "#050505")
+    static let settingsIconTint = dynamic(light: "#C8C4BE", dark: "#D6D1CA")
+    static let settingsChevronTint = dynamic(light: "#8D9299", dark: "#707781")
+    static let settingsDivider = dynamic(light: "#E7E2DA", dark: "#1C1C1C")
+    static let settingsPressedBackground = dynamic(light: "#F2EEE7", dark: "#101010")
+    static let settingsDestructive = dynamic(light: "#E01052", dark: "#F01A5E")
 
     static let background = screenBackground
     static let surfaceLevel1 = surfacePrimary

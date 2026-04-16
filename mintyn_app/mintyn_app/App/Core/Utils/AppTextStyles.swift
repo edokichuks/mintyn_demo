@@ -28,4 +28,8 @@ enum AppTextStyles {
     static let homePromoSubtitle = AppFonts.scaledFont(size: 13, weight: .regular, textStyle: .caption1)
     static let homeExploreTitle = AppFonts.scaledFont(size: 15, weight: .medium, textStyle: .headline)
     static let homeExploreSubtitle = AppFonts.scaledFont(size: 13, weight: .regular, textStyle: .caption1)
+    static let settingsScreenTitle = AppFonts.scaledFont(size: 18, weight: .medium, textStyle: .headline)
+    static let settingsRowTitle = AppFonts.scaledFont(size: 16, weight: .regular, textStyle: .body)
+    static let settingsChildTitle = AppFonts.scaledFont(size: 15, weight: .regular, textStyle: .body)
+    static let settingsBodyNote = AppFonts.scaledFont(size: 13, weight: .regular, textStyle: .footnote)
 }

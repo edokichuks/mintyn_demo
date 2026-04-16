@@ -8,6 +8,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
+        let appearanceService = AppAppearanceService()
+        appearanceService.applyStoredAppearance(to: window)
         self.window = window
 
         let splashViewController = SplashViewController(
@@ -19,7 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         navigationController.navigationBar.isHidden = true
 
-        let appCoordinator = AppCoordinator(navigationController: navigationController)
+        let appCoordinator = AppCoordinator(
+            navigationController: navigationController,
+            appearanceService: appearanceService
+        )
         self.appCoordinator = appCoordinator
 
         splashViewController.onFinish = { [weak window] in

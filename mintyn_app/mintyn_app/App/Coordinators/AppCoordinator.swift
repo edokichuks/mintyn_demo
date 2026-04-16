@@ -4,13 +4,16 @@ final class AppCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     private let tokenStore: AuthTokenStoreProtocol
+    private let appearanceService: AppAppearanceServing
 
     init(
         navigationController: UINavigationController,
-        tokenStore: AuthTokenStoreProtocol = KeychainService()
+        tokenStore: AuthTokenStoreProtocol = KeychainService(),
+        appearanceService: AppAppearanceServing = AppAppearanceService()
     ) {
         self.navigationController = navigationController
         self.tokenStore = tokenStore
+        self.appearanceService = appearanceService
     }
 
     func start() {
@@ -40,7 +43,8 @@ final class AppCoordinator: Coordinator {
     private func showMainFlow() {
         let mainCoordinator = MainCoordinator(
             navigationController: navigationController,
-            tokenStore: tokenStore
+            tokenStore: tokenStore,
+            appearanceService: appearanceService
         )
         mainCoordinator.onLogout = { [weak self] in
             self?.showAuthFlow()

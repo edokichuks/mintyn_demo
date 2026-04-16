@@ -11,6 +11,8 @@
 		432C14DFAE60A3225BEAB227 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE62AB0736F20CD23A963C1C /* Foundation.framework */; };
 		61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */; };
 		79A0CBAB1D2E3F4051627384 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* SettingsViewModelTests.swift */; };
+		B1C2D3E4F5061728394A5B6C /* SettingsFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5061728394A5B6D /* SettingsFlowUITests.swift */; };
 		9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F39281966431020CA1D342 /* MockTokenStore.swift */; };
 		97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */; };
 		E66DE32309F42F13E67F6CED /* LoginFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */; };
@@ -38,8 +40,10 @@
 		761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginFlowUITests.swift; sourceTree = "<group>"; };
 		79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
 		8939FE93D7FCE2F044F1C6ED /* MockAuthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MockAuthService.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		A27F17D422651450F27294E9 /* mintyn_appUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mintyn_appUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE62AB0736F20CD23A963C1C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		B1C2D3E4F5061728394A5B6D /* SettingsFlowUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsFlowUITests.swift; sourceTree = "<group>"; };
 		CE77B69F2F8E52B800AF0DFF /* mintyn_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mintyn_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBF3AFE67F8495390D952A95 /* mintyn_appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mintyn_appTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
@@ -94,6 +98,7 @@
 				F8E4403865CA207E0BDD8226 /* Helpers */,
 				79A0CBAB1D2E3F4051627385 /* HomeViewModelTests.swift */,
 				EBB3FE8CDA56EC3D93E26115 /* LoginViewModelTests.swift */,
+				A1B2C3D4E5F60718293A4B5D /* SettingsViewModelTests.swift */,
 			);
 			path = mintyn_appTests;
 			sourceTree = "<group>";
@@ -110,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				761FCD2E0219E46A2BEDE404 /* LoginFlowUITests.swift */,
+				B1C2D3E4F5061728394A5B6D /* SettingsFlowUITests.swift */,
 			);
 			path = mintyn_appUITests;
 			sourceTree = "<group>";
@@ -270,6 +276,7 @@
 			files = (
 				79A0CBAB1D2E3F4051627384 /* HomeViewModelTests.swift in Sources */,
 				97D3B69EDDF2B6E4570F8B6B /* LoginViewModelTests.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* SettingsViewModelTests.swift in Sources */,
 				61A7FF573E8BA57BD98F5733 /* MockAuthService.swift in Sources */,
 				9570F0D6184C89890BC7BEC1 /* MockTokenStore.swift in Sources */,
 			);
@@ -287,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E66DE32309F42F13E67F6CED /* LoginFlowUITests.swift in Sources */,
+				B1C2D3E4F5061728394A5B6C /* SettingsFlowUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
