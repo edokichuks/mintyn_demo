@@ -1,5 +1,19 @@
 ## iOS UIKit App – Mintyn-Inspired Demo
 
+## App Walkthrough
+
+[![Mintyn demo walkthrough](media/mintyn-demo-thumbnail.png)](media/mintyn-demo.mp4)
+
+Recorded iPhone simulator walkthrough: [mintyn-demo.mp4](media/mintyn-demo.mp4)
+
+The walkthrough covers:
+- login quick actions
+- mocked authentication
+- home dashboard sections
+- custom tab navigation
+- settings appearance flow
+- logout back to login
+
 ### 1. Project Overview
 
 A **UIKit-based iOS application** that recreates key flows from the Mintyn app:
