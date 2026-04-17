@@ -91,7 +91,7 @@ final class MainTabBarItemView: UIControl {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.axis = .vertical
         contentStackView.alignment = .center
-        contentStackView.spacing = style == .floatingCenter ? 6 : 4
+        contentStackView.spacing = style == .floatingCenter ? 24 : 4
         contentStackView.isUserInteractionEnabled = false
 
         addSubview(selectionBackgroundView)
