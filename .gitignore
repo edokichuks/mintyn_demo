@@ -27,9 +27,6 @@ xcuserdata/
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
-.agents/
-.ai/
-AGENT.md
 
 # ---- Swift Package Manager ----
 .build/

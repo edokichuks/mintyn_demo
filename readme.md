@@ -51,7 +51,7 @@ The app uses a **mock authentication flow** (no backend integration) and focuses
     * Transactions
     * Settings
 
-#### Suggested Folder Structure
+#### Folder Structure
 
 ```
 /App
@@ -123,7 +123,28 @@ MainTabsViewController
 
 ---
 
-### 5. Testing Strategy
+### 5. Mock Login Credentials
+
+> ⚠️ **Use any of the phone numbers below with the password to log in.**
+
+| # | **Phone Number** | **Password** |
+|---|-----------------|-------------|
+| 1 | **`8021234567`** | **`password`** |
+| 2 | **`8141584265`** | **`password`** |
+| 3 | **`8000000000`** | **`password`** |
+| 4 | **`7000000000`** | **`password`** |
+| 5 | **`9000000000`** | **`password`** |
+
+Phone numbers can be entered in any of these formats:
+- `8021234567` (10 digits)
+- `08021234567` (with leading 0)
+- `+2348021234567` (with country code)
+
+> These credentials are used with the mock authentication service. No real backend is involved.
+
+---
+
+### 6. Testing Strategy
 
 #### Unit Tests
 
@@ -148,46 +169,6 @@ MainTabsViewController
 * Logout flow:
 
   * Settings logout → return to Login screen
-
----
-
-### 6. Development Roadmap (4-Hour Scope)
-
-#### Phase 1 – Setup (30–45 mins)
-
-* Project creation (UIKit, no storyboard or storyboard-based)
-* Setup folder structure
-* Implement base navigation (Coordinator or SceneDelegate logic)
-
-#### Phase 2 – Login Flow (45–60 mins)
-
-* Build Login UI
-* Implement mock AuthService
-* Handle navigation to TabBar
-
-#### Phase 3 – Tab Bar + Home (45–60 mins)
-
-* Setup `UITabBarController`
-* Build Home UI with mock data
-
-#### Phase 4 – Settings (45–60 mins)
-
-* Table-based layout (`UITableView`)
-* Implement:
-
-  * System section
-  * Legal section
-  * Logout action
-
-#### Phase 5 – Testing (30–45 mins)
-
-* Add basic unit tests for AuthService
-* Add UI test for login/logout flow
-
-#### Phase 6 – Polish (Remaining Time)
-
-* Improve UI consistency (spacing, typography)
-* Refactor for readability
 
 ---
 

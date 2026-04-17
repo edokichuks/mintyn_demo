@@ -20,7 +20,9 @@ final class AuthService: AuthServiceProtocol {
     static let acceptedDemoPhones: Set<String> = [
         "8021234567",
         "8141584265",
-        "8000000000"
+        "8000000000",
+        "7000000000",
+        "9000000000"
     ]
 
     private let loginDelayNanoseconds: UInt64

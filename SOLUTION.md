@@ -1,14 +1,32 @@
+# Things I would have done if given enough time
+
+- [ ] Add country picker on login screen
+- [ ] Get the right animation on login screen
+- [ ] Add a loading overlay.
+- [ ] Add a similar loading animation on Home Screen
+- [ ] Get the right app icon
+- [ ] Get the right icons for the Home Screen.
+- [ ] Get the right Lottie assets or the animation on Home Screen.
+- [ ] Make the button gradient background
+- [ ] Write more test
+
+---
+
 # Mintyn Authenticated Flow Solution
 
 ## Tutorial
 
 ### Launch and use the authenticated flow
 1. Build and run the `mintyn_app` scheme.
-2. On the login screen, enter a Nigerian phone number in any of these forms:
-   - `8021234567`
-   - `08021234567`
-   - `+2348021234567`
-3. Enter the demo password: `password`.
+2. On the login screen, enter **any** of the demo phone numbers below:
+   - **`8021234567`**
+   - **`8141584265`**
+   - **`8000000000`**
+   - **`7000000000`**
+   - **`9000000000`**
+   
+   Each can also be entered with a leading `0` (e.g. `08021234567`) or country code (e.g. `+2348021234567`).
+3. Enter the demo password: **`password`**.
 4. Tap `Remember me` if you want the mock token persisted in Keychain.
 5. Tap `Login` to enter the home dashboard.
 6. Use the custom bottom navigation to switch between `Home`, `Invest`, `Menu`, `Transactions`, and `Settings`.
@@ -126,10 +144,18 @@
 - `settingsLogoutButton`
 
 ### Mock auth contract
-- Valid phone: `8021234567`
-- Valid password: `password`
-- Success token: `mintyn-demo-token`
-- Auth failure message: `Invalid phone number or password.`
+
+> ⚠️ **Use any phone + password combination below to authenticate.**
+
+| # | **Valid Phone** | **Password** | **Token** |
+|---|----------------|-------------|----------|
+| 1 | **`8021234567`** | **`password`** | `mintyn-demo-token` |
+| 2 | **`8141584265`** | **`password`** | `mintyn-demo-token` |
+| 3 | **`8000000000`** | **`password`** | `mintyn-demo-token` |
+| 4 | **`7000000000`** | **`password`** | `mintyn-demo-token` |
+| 5 | **`9000000000`** | **`password`** | `mintyn-demo-token` |
+
+- **Auth failure message:** `Invalid phone number or password.`
 
 ### Test coverage
 - `LoginViewModelTests`
